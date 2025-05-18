@@ -1,0 +1,8 @@
+
+# Node / Nuxt
+node_modules
+npm-debug.log
+.env
+# Docker
+db-data
+
