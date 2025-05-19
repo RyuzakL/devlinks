@@ -1,0 +1,26 @@
+{
+  "name": "My Links App Dev Container",
+  // on réutilise ton compose racine
+  "dockerComposeFile": "./docker-compose.yml",
+  // on cible le service dans lequel tu veux éditer / lancer tes commandes
+  "service": "backend",
+  // dossier de travail à l’intérieur du container (doit matcher WORKDIR du Dockerfile)
+  "workspaceFolder": "/app",
+
+  // extensions VS Code utiles pour Node/TS/Prisma/Docker
+  "customizations": {
+    "vscode" : {
+      "extensions": [
+        "ms-azuretools.vscode-docker",
+        "dbaeumer.vscode-eslint",
+        "esbenp.prettier-vscode",
+        "Prisma.prisma",
+        "EditorConfig.EditorConfig"
+      ]
+    }
+  },
+ 
+  // ouvre automatiquement le port de ton API
+  "forwardPorts": [4000],
+  "postCreateCommand": "npm install"
+}

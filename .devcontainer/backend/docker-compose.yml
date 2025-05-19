@@ -2,10 +2,14 @@ services:
   db:
     image: postgres:16-alpine
     env_file:
-      - ./backend/.env         
+      - .env         
     restart: unless-stopped
     volumes:
       - db-data:/var/lib/postgresql/data
+    environment:
+      - POSTGRES_USER=${POSTGRES_USER}
+      - POSTGRES_PASSWORD=${POSTGRES_PASSWORD}
+      - POSTGRES_DB=${POSTGRES_DB}
     healthcheck:
       test: ["CMD-SHELL", "pg_isready -U ${POSTGRES_USER} -d ${POSTGRES_DB}"]
       interval: 5s
@@ -14,17 +18,17 @@ services:
 
   backend: 
     build:
-      context: ./backend
-      dockerfile: Dockerfile
+      context: ../../backend
+      dockerfile: ../.devcontainer/backend/Dockerfile
     depends_on:
       db:
         condition: service_healthy
     env_file:
-      - ./backend/.env
+      - .env
     ports:
       - "4000:4000"
     volumes:         # Hot-reload côté host ↔ container
-      - ./backend:/app
+      - ../../backend:/app
       - /app/node_modules  # empêche l’écrasement par le volume host
 
 volumes:
